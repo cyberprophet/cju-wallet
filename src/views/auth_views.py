@@ -17,6 +17,7 @@ from src import login_manager
 from src.forms import SignUpForm, LoginForm
 from src import db
 from src.utils.passwd_utils import check_passwd_strength
+from src.wallet import Wallet
 
 bp = Blueprint("auth", __name__, url_prefix="/")
 
@@ -111,7 +112,7 @@ def sign_up():
             flash("입력하신 비밀번호와 비밀번호 확인이 틀립니다.")
             return render_template("sign_up.html", form=form)
 
-        # wallet = Wallet() <- To-do
+        wallet = Wallet()
 
         user = User(
             user_id=user_id,
@@ -121,9 +122,9 @@ def sign_up():
             name=data_dic.get("name"),
             create_date=datetime.now(),
             update_date=datetime.now(),
-            private_key="temp_private_key",
-            public_key="temp_public_key",
-            blockchain_addr="temp_blockchain_addr",
+            private_key=wallet.private_key,
+            public_key=wallet.public_key,
+            blockchain_addr=wallet.blockchain_address,
         )
         db.session.add(user)
         db.session.commit()

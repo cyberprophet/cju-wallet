@@ -14,3 +14,10 @@ class User(db.Model, UserMixin):
     private_key = db.Column(db.String(300), nullable=True)
     public_key = db.Column(db.String(300), nullable=True)
     blockchain_addr = db.Column(db.String(300), nullable=True)
+
+
+class MiningNode(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    ip = db.Column(db.String(50), nullable=False)
+    port = db.Column(db.String(50), nullable=False)
+    timestamp = db.Column(db.Float)
